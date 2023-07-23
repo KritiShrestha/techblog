@@ -1,0 +1,13 @@
+{{#if posts}}
+<h2>Recent Posts</h2>
+<ul>
+  {{#each posts}}
+  <li>
+    <a href="/blog/{{id}}">{{title}}</a>
+    <p>Posted on {{formatDate createdAt}}</p>
+  </li>
+  {{/each}}
+</ul>
+{{else}}
+<p>No posts found.</p>
+{{/if}}

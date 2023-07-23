@@ -1,0 +1,24 @@
+{
+    "development": {
+      "username": "your_database_user",
+      "password": "your_database_password",
+      "database": "your_database_name",
+      "host": "your_database_host",
+      "dialect": "mysql"
+    },
+    "test": {
+      "username": "your_test_database_user",
+      "password": "your_test_database_password",
+      "database": "your_test_database_name",
+      "host": "your_test_database_host",
+      "dialect": "mysql"
+    },
+    "production": {
+      "username": "your_production_database_user",
+      "password": "your_production_database_password",
+      "database": "your_production_database_name",
+      "host": "your_production_database_host",
+      "dialect": "mysql"
+    }
+  }
+  

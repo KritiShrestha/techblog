@@ -1,0 +1,29 @@
+<h2>{{post.title}}</h2>
+<p>Posted by {{post.user.username}} on {{formatDate post.createdAt}}</p>
+<div class="content">
+  {{{post.content}}}
+</div>
+
+{{#if comments}}
+<h3>Comments</h3>
+<ul>
+  {{#each comments}}
+  <li>
+    <p>{{content}}</p>
+    <p>Comment by {{user.username}} on {{formatDate createdAt}}</p>
+  </li>
+  {{/each}}
+</ul>
+{{else}}
+<p>No comments yet.</p>
+{{/if}}
+
+{{#if user}}
+<h3>Add a Comment</h3>
+<form action="/blog/{{post.id}}/comment" method="post">
+  <textarea name="content" placeholder="Write your comment here..." required></textarea>
+  <button type="submit">Submit</button>
+</form>
+{{else}}
+<p>Please login or sign up to leave a comment.</p>
+{{/if}}

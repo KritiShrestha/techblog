@@ -4,16 +4,29 @@ const { User, Post, Comment } = require('../models');
 
 // Render the homepage with recent posts
 router.get('/', async (req, res) => {
-  try {
-    const posts = await Post.findAll({
-      include: [{ model: User, attributes: ['username'] }],
-      order: [['createdAt', 'DESC']],
-    });
-    res.render('homepage', { posts, user: req.session.user });
-  } catch (err) {
-    console.error(err);
-    res.render('homepage', { error: 'An error occurred. Please try again.' });
+
+  if(req.session.user) {
+    try {
+      const posts = await Post.findAll({
+        where: { userId: req.session.user.id },
+        include: [{ model: User, attributes: ['username'] }],
+        order: [['createdAt', 'DESC']],
+      });
+
+      res.render('dashboard', { posts: posts , user: req.session.user });
+
+      // console.log(" user session in /", req.session.user); 
+      // console.log("Posts fetched:", posts);
+      // res.render('homepage', { posts, user: req.session.user });
+    } catch (err) {
+      console.error(err);
+      res.render('dashboard', { error: 'An error occurred. Please try again.', user: req.session.user });
+    }
   }
+  else{
+    res.render('login');
+  }
+  
 });
 
 
@@ -55,35 +68,28 @@ router.post('/blog/:id/comment', async (req, res) => {
 
 // Render the dashboard with user's posts
 router.get('/dashboard', async (req, res) => {
-  try {
-    // const posts = await Post.findAll({
-    //   where: { userId: req.session.user.id },
-    //   include: [{ model: User, attributes: ['username'] }],
-    //   order: [['createdAt', 'DESC']],
-    // });
+  if(req.session.user) {
+    try {
+      console.log(" user session in dashboard", req.session.user); 
 
-    const posts = await Post.findAll(); // Fetch all posts from the database
+      const posts = await Post.findAll({
+        where: { userId: req.session.user.id },
+        include: [{ model: User, attributes: ['username'] }],
+        order: [['createdAt', 'DESC']],
+      });
+
+    //  const posts = await Post.findAll(); // Fetch all posts from the database
 
     // console.log("Posts fetched:", posts);
-
-    // Example query to fetch posts
-    // Post.findAll({
-    //     where: { userId:  req.session.user.id  },
-    //     order: [["createdAt", "DESC"]],
-    //   })
-    //     .then((posts) => {
-    //       console.log("Posts:", posts); // Log the fetched posts to check if they are retrieved correctly
-    //       res.render("dashboard", { user: req.user, posts: posts });
-    //     })
-    //     .catch((err) => {
-    //       console.error("Error fetching posts:", err);
-    //       res.render("dashboard", { user: req.user, posts: [] }); // Render an empty array if there is an error
-    //     });
-    res.render('dashboard', { posts: posts , user: req.user });
-  } catch (err) {
-    console.error(err);
-    res.render('dashboard', { error: 'An error occurred. Please try again.', user: req.session.user });
-  }
+      res.render('dashboard', { posts: posts , user: req.session.user });
+    } catch (err) {
+      console.error(err);
+      res.render('dashboard', { error: 'An error occurred. Please try again.', user: req.session.user });
+    }
+}
+else{
+  res.render('login');
+}
 });
 
 // Render the "New Post" form
@@ -121,6 +127,7 @@ router.get('/dashboard/edit/:id', async (req, res) => {
 
 // Handle the "Edit Post" form submission
 router.post('/dashboard/edit/:id', async (req, res) => {
+  console.log("Edit post!");
   const postId = req.params.id;
   const { title, content } = req.body;
   try {

@@ -3,8 +3,8 @@
 <ul>
   {{#each posts}}
   <li>
-    <a href="/blog/{{id}}">{{title}}</a>
-    <p>Posted on {{formatDate createdAt}}</p>
+    <a href="/blog/{{dataValues.id}}">{{dataValues.title}}</a>
+    <p>Posted on {{formatDate dataValues.createdAt}}</p>
   </li>
   {{/each}}
 </ul>

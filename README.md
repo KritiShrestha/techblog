@@ -8,7 +8,6 @@ As a tech developer who writes about technology, this CMS-style blog site provid
 - [Usage](#usage)
 - [Contribution](#contribution)
 - [Questions](#questions)
-- [Videolink](#Videolink)
 
 ## Technology
 - Front-end: HTML, CSS, JavaScript

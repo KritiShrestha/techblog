@@ -1,0 +1,28 @@
+<!-- views/postdetails.handlebars -->
+
+<h1>{{ post.dataValues.title }}</h1>
+<p>{{ post.dataValues.content }}</p>
+<p>Created by: {{post.user.dataValues.username}} on {{formatDate post.dataValues.createdAt}}</p>
+
+<h2>Comments</h2>
+{{#if post.dataValues.comments.length}}
+<ul>
+  {{#each post.dataValues.comments}}
+  <li>
+    {{log post}}
+    <p>Comment by: {{post.user.dataValues.username}}</p>
+    <p>{{content}}</p>
+  </li>
+  {{/each}}
+</ul>
+{{else}}
+<p>No comments yet.</p>
+{{/if}}
+
+<h2>Add a Comment</h2>
+<form action="/blog/comment/{{post.dataValues.id}}" method="POST">
+  <label for="content">Comment:</label>
+  <textarea name="content" id="content" required></textarea>
+  <button type="submit">Submit</button>
+</form>
+

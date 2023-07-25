@@ -15,9 +15,6 @@ router.get('/', async (req, res) => {
 
       res.render('dashboard', { posts: posts , user: req.session.user });
 
-      // console.log(" user session in /", req.session.user); 
-      // console.log("Posts fetched:", posts);
-      // res.render('homepage', { posts, user: req.session.user });
     } catch (err) {
       console.error(err);
       res.render('dashboard', { error: 'An error occurred. Please try again.', user: req.session.user });
@@ -43,16 +40,16 @@ router.get('/blog/:id', async (req, res) => {
     if (!post) {
       return res.render('blogpost', { error: 'Post not found.' });
     }
-    res.render('blogpost', { post, comments: post.comments, user: req.session.user });
+    const user = req.session.user
+    res.render('postdetails', { post: post, user: user });
   } catch (err) {
     console.error(err);
-    res.render('blogpost', { error: 'An error occurred. Please try again.' });
+    res.render('postdetails', { error: 'An error occurred. Please try again.' });
   }
 });
 
-
 // Handle comment form submission
-router.post('/blog/:id/comment', async (req, res) => {
+router.post('/blog/comment/:id', async (req, res) => {
   const postId = req.params.id;
   const { content } = req.body;
   try {
@@ -114,6 +111,7 @@ router.post('/dashboard/new', async (req, res) => {
 router.get('/dashboard/edit/:id', async (req, res) => {
   const postId = req.params.id;
   try {
+    console.log("Get Router of Edit post!");
     const post = await Post.findByPk(postId);
     if (!post || post.userId !== req.session.user.id) {
       return res.redirect('/dashboard');
@@ -127,7 +125,7 @@ router.get('/dashboard/edit/:id', async (req, res) => {
 
 // Handle the "Edit Post" form submission
 router.post('/dashboard/edit/:id', async (req, res) => {
-  console.log("Edit post!");
+  console.log(" Post Edit post!");
   const postId = req.params.id;
   const { title, content } = req.body;
   try {

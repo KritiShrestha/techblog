@@ -20,7 +20,7 @@ As a tech developer who writes about technology, this CMS-style blog site provid
 To run the CMS-style blog site locally on your machine, follow these steps:
 - Clone the repository https://github.com/KritiShrestha/techblog to your local machine.
 - Install the necessary dependencies using npm install.
-- Set up your database and configure the connection in the .env file.
+- Set up your database and configure the connection in the .env file(use DB_NAME='tech_blog' and 'DB_HOST='127.0.0.1')
 - Run the schema.sql in db directory to create schemas
 - Run the application using npm start.
 

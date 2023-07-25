@@ -38,6 +38,9 @@ app.engine("handlebars", exphbs({
   defaultLayout: "main",
   helpers: {
     // Define the formatDate helper
+    log: function (context) {
+      console.log(context);
+    },
     formatDate: function (date) {
       if (!date) return ""; // Handle empty date gracefully
       const parsedDate = new Date(date);

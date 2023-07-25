@@ -1,22 +1,24 @@
 <h1>Welcome to your Dashboard, {{user.username}}!</h1>
 
 <h2>My Dashboard</h2>
+<div class="posts">
 {{#if posts}}
 <ul>
  {{!-- Debug: Display the entire 'posts' array --}}
   {{#each posts}}
   <div>
-    <h2>{{dataValues.title}}</h2>
-    <p>{{dataValues.content}}</p>
+    <h2><a href="/blog/{{dataValues.id}}">{{dataValues.title}}</a></h2>
+    <p><a href="/blog/{{dataValues.id}}">{{dataValues.content}}</a></p>
   </div>
-  <li>
+  <ul>
     <a href="/dashboard/edit/{{dataValues.id}}">Edit</a>
     <a href="/dashboard/delete/{{dataValues.id}}">Delete</a>
-  </li>
+  </ul>
   {{/each}}
 </ul>
 {{else}}
 <p>No posts found.</p>
 {{/if}}
+</div>
 <a href="/dashboard/new">Add New Post</a>
 
